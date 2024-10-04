@@ -84,9 +84,15 @@ public class PythonService extends Service implements Runnable {
         pythonName = extras.getString("pythonName");
         pythonHome = extras.getString("pythonHome");
         pythonPath = extras.getString("pythonPath");
-        boolean serviceStartAsForeground = (
-            extras.getString("serviceStartAsForeground").equals("true")
-        );
+
+	boolean serviceStartAsForeground = (
+	    "true".equals(extras.getString("serviceStartAsForeground"))
+	);
+
+	    
+	// boolean serviceStartAsForeground = (
+        //     extras.getString("serviceStartAsForeground").equals("true")
+        // );
         pythonServiceArgument = extras.getString("pythonServiceArgument");
 
 	// Atribuie foregroundServiceType din intent
