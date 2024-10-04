@@ -106,6 +106,7 @@ public class PythonService extends Service implements Runnable {
         String smallIconName = extras.getString("smallIconName");
         String contentTitle = extras.getString("contentTitle");
         String contentText = extras.getString("contentText");
+	String foregroundServiceType = extras.getString("foregroundServiceType");
         Notification notification;
         Context context = getApplicationContext();
         Intent contextIntent = new Intent(context, PythonActivity.class);
@@ -160,8 +161,20 @@ public class PythonService extends Service implements Runnable {
             builder.setSmallIcon(smallIconId);
             notification = builder.build();
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                startForeground(getServiceId(), notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+		int foregroundServiceTypeFlag;
+	        switch (foregroundServiceType) {
+		case "dataSync":
+			foregroundServiceTypeFlag = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC;
+			break;
+		case "location":
+			foregroundServiceTypeFlag = ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION;
+			break;
+		default:
+			foregroundServiceTypeFlag = ServiceInfo.FOREGROUND_SERVICE_TYPE_NONE;
+			break;
+	        }
+                startForeground(getServiceId(), notification, foregroundServiceTypeFlag);
         } else {
                 startForeground(getServiceId(), notification);
         }
