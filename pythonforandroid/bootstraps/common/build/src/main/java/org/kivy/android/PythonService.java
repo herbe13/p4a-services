@@ -170,6 +170,9 @@ public class PythonService extends Service implements Runnable {
 		case "location":
 			foregroundServiceTypeFlag = ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION;
 			break;
+		case "specialUse":
+			foregroundServiceTypeFlag = ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE;
+			break;
 		default:
 			foregroundServiceTypeFlag = ServiceInfo.FOREGROUND_SERVICE_TYPE_NONE;
 			break;
