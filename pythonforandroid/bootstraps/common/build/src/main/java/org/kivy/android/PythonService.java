@@ -40,11 +40,16 @@ public class PythonService extends Service implements Runnable {
     private Intent startIntent = null;
 
     private boolean autoRestartService = false;
+    private String foregroundServiceType = "typeNone";
 
     public void setAutoRestartService(boolean restart) {
         autoRestartService = restart;
     }
 
+    public void setForegroundServiceType(String serviceType) {
+        foregroundServiceType = serviceType;
+    }
+	
     public int startType() {
         return START_NOT_STICKY;
     }
@@ -83,6 +88,12 @@ public class PythonService extends Service implements Runnable {
             extras.getString("serviceStartAsForeground").equals("true")
         );
         pythonServiceArgument = extras.getString("pythonServiceArgument");
+
+	// Atribuie foregroundServiceType din intent
+	if (extras.containsKey("foregroundServiceType")) {
+		foregroundServiceType = extras.getString("foregroundServiceType");
+	}
+	    
         pythonThread = new Thread(this);
         pythonThread.start();
 
@@ -106,7 +117,6 @@ public class PythonService extends Service implements Runnable {
         String smallIconName = extras.getString("smallIconName");
         String contentTitle = extras.getString("contentTitle");
         String contentText = extras.getString("contentText");
-	String foregroundServiceType = extras.getString("foregroundServiceType");
         Notification notification;
         Context context = getApplicationContext();
         Intent contextIntent = new Intent(context, PythonActivity.class);
